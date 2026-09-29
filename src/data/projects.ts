@@ -48,21 +48,6 @@ export const projects: Project[] = [
     links: [{ label: "GitHub", href: "https://github.com/YRMishra19/JHM-Hotel-Analysis" }],
   },
   {
-    id: "nfc-qr-review",
-    title: "NFC/QR Review Collection System",
-    category: "Automation",
-    status: "Live",
-    problem:
-      "Getting guests to leave reviews right after a positive stay is the highest-converting moment - and the easiest to lose to friction.",
-    approach:
-      "Designed a tap/scan-based review flow (NFC and QR) that routes guests straight to the right review platform at the right moment.",
-    solution: "A review collection system deployed across Jamsan properties, independently built and rolled out.",
-    result: "[ADD METRIC] - add review-volume or rating-impact figures once available.",
-    role: "Independently developed and deployed.",
-    tech: ["NFC", "QR", "Review Platform Integration"],
-    links: [],
-  },
-  {
     id: "jamsan-social-hub",
     title: "Jamsan Social Hub",
     category: "AI / Internal Platform",
@@ -78,18 +63,5 @@ export const projects: Project[] = [
     tech: ["Python", "JavaScript", "Google Gemini", "Canva API", "Google Drive"],
     links: [],
     featured: true,
-  },
-  {
-    id: "applyai",
-    title: "ApplyAI",
-    category: "AI",
-    status: "In Progress",
-    problem: "[ADD INFORMATION] - describe the job-application pain point ApplyAI addresses.",
-    approach: "[ADD INFORMATION] - describe the technical approach and architecture.",
-    solution: "An AI-powered job application tool, independently developed.",
-    result: "[ADD INFORMATION] - add usage or outcome details once available.",
-    role: "Independently developed.",
-    tech: ["[ADD TECH STACK]"],
-    links: [],
   },
 ];
