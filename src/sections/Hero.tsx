@@ -12,7 +12,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-[100svh] flex items-center overflow-hidden film-grain pt-32 pb-20"
+      className="relative min-h-[100svh] flex items-center overflow-hidden film-grain pt-28 pb-14 sm:pt-32 sm:pb-20"
       aria-label="Introduction"
     >
       {/* Cinematic animated background */}
@@ -38,8 +38,17 @@ export function Hero() {
       </div>
 
       <Container className="w-full">
-        <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
-          <div>
+        <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-8 sm:gap-14 items-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.1 }}
+            className="order-first lg:order-2 w-full max-w-[220px] sm:max-w-[300px] lg:max-w-[420px] xl:max-w-[480px] mx-auto lg:mx-0"
+          >
+            <PortraitImage src={profile.portraitPrimary} alt={`Portrait of ${profile.name}`} />
+          </motion.div>
+
+          <div className="lg:order-1">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -81,28 +90,19 @@ export function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.44 }}
-              className="mt-10 flex flex-wrap items-center gap-4"
+              className="mt-10 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4"
             >
-              <Button href="#projects" variant="primary">
+              <Button href="#projects" variant="primary" className="w-full sm:w-auto">
                 View My Work
               </Button>
-              <Button href="#contact" variant="primary">
+              <Button href="#contact" variant="primary" className="w-full sm:w-auto">
                 Let's Connect
               </Button>
-              <Button href={profile.resumeUrl} variant="primary" download>
+              <Button href={profile.resumeUrl} variant="primary" download className="w-full sm:w-auto">
                 Download Resume
               </Button>
             </motion.div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.2 }}
-            className="hidden lg:block w-full max-w-[420px] xl:max-w-[480px] mx-auto"
-          >
-            <PortraitImage src={profile.portraitPrimary} alt={`Portrait of ${profile.name}`} />
-          </motion.div>
         </div>
       </Container>
 
