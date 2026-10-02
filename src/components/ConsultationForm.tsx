@@ -32,7 +32,9 @@ const initialState: FormState = { name: "", email: "", phone: "", reason: REASON
  * flip DEMO_MODE to false below. Until then, submissions are validated and
  * shown a clear "not connected yet" error rather than a fake success.
  */
-const CONTACT_ENDPOINT = ""; // e.g. "https://formspree.io/f/your-id"
+const CONTACT_ENDPOINT =
+  "https://script.google.com/macros/s/AKfycbyjHmqdvmuHpIbrMlAVHc_z0fckWLibwCMWZEPdVsZrvLEyaEvwOaarsG-ZAZ1bA9oSMQ/exec";
+const CONTACT_TOKEN = "uby67piqgWODocoV8AfbQif_RcMyXRMo";
 const DEMO_MODE = CONTACT_ENDPOINT.length === 0;
 
 export function ConsultationForm() {
@@ -76,12 +78,16 @@ export function ConsultationForm() {
     }
 
     try {
-      const response = await fetch(CONTACT_ENDPOINT, {
+      // Google Apps Script web apps don't send CORS headers back, so the
+      // response is opaque under no-cors - if fetch doesn't throw, treat it
+      // as delivered. The token is validated server-side before anything
+      // is written or emailed.
+      await fetch(CONTACT_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(values),
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ ...values, token: CONTACT_TOKEN }).toString(),
       });
-      if (!response.ok) throw new Error("Request failed");
       setStatus("success");
       setValues(initialState);
     } catch {
