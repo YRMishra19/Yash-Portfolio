@@ -11,6 +11,16 @@ export type Project = {
   tech: string[];
   links?: { label: string; href: string }[];
   featured?: boolean;
+  /** Outcome screenshot, served from /public. */
+  image?: string;
+  imageAlt?: string;
+  imageCaption?: string;
+  /** Headline numbers shown as stat tiles. */
+  metrics?: { value: string; label: string }[];
+  /** Short pipeline steps rendered as a flow strip. */
+  pipeline?: string[];
+  findings?: string[];
+  recommendations?: string[];
 };
 
 export const projects: Project[] = [
@@ -22,14 +32,35 @@ export const projects: Project[] = [
     problem:
       "Ad performance data from Meta campaigns was scattered across exports, making it hard to see funnel health, audience response, and ROI at a glance.",
     approach:
-      "Modeled the campaign data and built a structured Power BI report covering funnel-stage metrics, audience segmentation, and spend efficiency.",
+      "Modeled four related tables (ads, campaigns, users, ad events) into a star-style Power BI data model, then defined DAX measures for every funnel stage from impression to purchase.",
     solution:
-      "A Power BI dashboard analyzing 216K impressions, 25.4K clicks, and 1.3K conversions - built solo, end to end.",
-    result: "Translated raw campaign data into a business-ready recommendation on budget reallocation.",
-    role: "Solo - data modeling, dashboard design, and analysis.",
-    tech: ["Power BI", "Data Modeling", "Marketing Analytics"],
-    links: [{ label: "GitHub", href: "https://github.com/YRMishra19/Meta-Ad-Project" }],
+      "A single-page Power BI dashboard covering funnel-stage KPIs, audience segmentation by gender, age and country, ad-format comparison, and weekly/hourly purchase trends - built solo, end to end, with a Business Requirements Document up front.",
+    result:
+      "Showed strong awareness and engagement but a sharp drop at conversion, and turned that into concrete recommendations on landing pages, retargeting, ad formats, and scheduling.",
+    role: "Solo - requirements, data modeling, dashboard design, and analysis.",
+    tech: ["Power BI", "DAX", "Data Modeling", "Marketing Analytics"],
+    links: [{ label: "View on GitHub", href: "https://github.com/YRMishra19/Meta-Ad-Project" }],
     featured: true,
+    image: "/images/projects/meta-ad-dashboard.png",
+    imageAlt: "Power BI dashboard showing Meta ad funnel KPIs, purchases by gender and age, weekly purchase trend, and ad-type analysis",
+    imageCaption: "Power BI dashboard - Instagram-filtered view shown",
+    metrics: [
+      { value: "216K", label: "Impressions" },
+      { value: "25.4K", label: "Clicks" },
+      { value: "11.76%", label: "CTR" },
+      { value: "5.21%", label: "Conversion rate" },
+    ],
+    pipeline: ["4 CSV sources", "Power BI data model", "DAX funnel measures", "Insights & recommendations"],
+    findings: [
+      "Strong awareness and engagement, with a significant drop-off at the conversion stage.",
+      "Female users (43%) and ages 18-30 engage most; India and Brazil lead, Germany and the UK show room to grow.",
+      "Video and Story ads outperform image and carousel formats; engagement peaks in the afternoon and evening.",
+    ],
+    recommendations: [
+      "Improve the landing-page experience to lift conversion.",
+      "Retarget engaged audiences and shift budget toward top-performing formats.",
+      "Schedule campaigns around peak engagement hours.",
+    ],
   },
   {
     id: "jhm-hotel-analysis",
@@ -41,11 +72,32 @@ export const projects: Project[] = [
     approach:
       "Cleaned 119,390 hotel booking records down to 86,637 analysis-ready rows using Python (pandas), then wrote MySQL queries (CTEs, window functions) to analyze cancellations, revenue channels, seasonality, and source markets.",
     solution:
-      "A Tableau dashboard with concrete marketing recommendations - deposits and direct-booking incentives - aimed at the channels driving the most cancellations.",
+      "A Tableau dashboard that ties cancellation rate, lead time, distribution channel, seasonal ADR, and top source markets into one view, with concrete marketing recommendations.",
     result: "Found Online Travel Agent bookings cancel at 35.5% versus 14.9% for Direct bookings.",
     role: "Solo - data cleaning, analysis, and visualization.",
-    tech: ["Python", "MySQL", "Tableau"],
-    links: [{ label: "GitHub", href: "https://github.com/YRMishra19/JHM-Hotel-Analysis" }],
+    tech: ["Python", "pandas", "MySQL", "Tableau"],
+    links: [{ label: "View on GitHub", href: "https://github.com/YRMishra19/JHM-Hotel-Analysis" }],
+    featured: true,
+    image: "/images/projects/hotel-booking-dashboard.png",
+    imageAlt: "Tableau dashboard showing monthly revenue trend, cancellation by lead time and segment, revenue by channel, seasonal ADR, and top countries by revenue",
+    imageCaption: "Tableau Public dashboard",
+    metrics: [
+      { value: "86.6K", label: "Clean bookings (of 119K)" },
+      { value: "35.5%", label: "OTA cancellation rate" },
+      { value: "14.9%", label: "Direct cancellation rate" },
+      { value: "$18.2M", label: "TA/TO channel revenue" },
+    ],
+    pipeline: ["119,390 raw rows", "pandas cleaning", "MySQL (CTEs, window functions)", "Tableau dashboard"],
+    findings: [
+      "Cancellations climb with lead time: 39.8% for bookings made 180+ days out versus 8.5% within a week.",
+      "Travel Agent / Tour Operator channels drive $18.2M of revenue versus $4.0M from Direct.",
+      "August is the revenue peak; resort summer ADR reaches $154.90. Portugal, the UK and France are the top markets.",
+    ],
+    recommendations: [
+      "Add deposits and direct-booking incentives to cut OTA cancellations.",
+      "Use flexible-but-prepaid pricing for early reservations.",
+      "Pre-plan campaigns and staffing for August; focus marketing on Portugal, the UK and France.",
+    ],
   },
   {
     id: "jamsan-social-hub",
@@ -63,5 +115,11 @@ export const projects: Project[] = [
     tech: ["Python", "JavaScript", "Google Gemini", "Canva API", "Google Drive"],
     links: [],
     featured: true,
+    metrics: [
+      { value: "270+", label: "Social handles" },
+      { value: "20+", label: "Hotel properties" },
+      { value: "5", label: "Stakeholder groups" },
+    ],
+    pipeline: ["Requirements from 5 stakeholders", "Schema for JSON + media + metrics", "AI search & Canva/Gemini", "Yearly reporting dashboard"],
   },
 ];

@@ -48,7 +48,7 @@ export function ProjectModal({ project, onClose }: { project: Project | null; on
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full md:max-w-3xl max-h-[90vh] overflow-y-auto rounded-t-3xl md:rounded-3xl border border-border-strong bg-bg-elevated p-8 md:p-12"
+            className="relative w-full md:max-w-4xl max-h-[90vh] overflow-y-auto rounded-t-3xl md:rounded-3xl border border-border-strong bg-bg-elevated p-8 md:p-12"
           >
             <button
               ref={closeButtonRef}
@@ -65,6 +65,51 @@ export function ProjectModal({ project, onClose }: { project: Project | null; on
               {project.title}
             </h3>
 
+            {project.image && (
+              <figure className="mt-8">
+                <img
+                  src={project.image}
+                  alt={project.imageAlt ?? project.title}
+                  className="w-full h-auto rounded-xl border border-border-strong"
+                />
+                {project.imageCaption && (
+                  <figcaption className="mt-2 text-xs text-fg-subtle">{project.imageCaption}</figcaption>
+                )}
+              </figure>
+            )}
+
+            {project.metrics && (
+              <dl className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+                {project.metrics.map((metric) => (
+                  <div key={metric.label} className="rounded-xl border border-border bg-bg px-4 py-3">
+                    <dd className="font-display text-2xl text-accent leading-none">{metric.value}</dd>
+                    <dt className="mt-1.5 text-[11px] uppercase tracking-[0.12em] text-fg-subtle">{metric.label}</dt>
+                  </div>
+                ))}
+              </dl>
+            )}
+
+            {project.pipeline && (
+              <div className="mt-8">
+                <p className="text-xs uppercase tracking-[0.2em] text-fg-subtle mb-3">Pipeline</p>
+                <ol className="flex flex-col md:flex-row md:items-stretch gap-2">
+                  {project.pipeline.map((step, i) => (
+                    <li key={step} className="flex-1 flex items-center gap-2">
+                      <span className="flex-1 h-full rounded-lg border border-border bg-bg px-3 py-2.5 text-sm text-fg-muted">
+                        <span className="text-accent mr-1.5">{i + 1}.</span>
+                        {step}
+                      </span>
+                      {i < project.pipeline!.length - 1 && (
+                        <span className="hidden md:block text-fg-subtle" aria-hidden="true">
+                          &rarr;
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
             <div className="mt-8 grid gap-6">
               <ModalBlock label="The Problem" text={project.problem} />
               <ModalBlock label="The Approach" text={project.approach} />
@@ -72,6 +117,9 @@ export function ProjectModal({ project, onClose }: { project: Project | null; on
               <ModalBlock label="The Impact" text={project.result} />
               <ModalBlock label="My Role" text={project.role} />
             </div>
+
+            {project.findings && <ModalList label="Key Findings" items={project.findings} />}
+            {project.recommendations && <ModalList label="Recommendations" items={project.recommendations} />}
 
             <div className="mt-8">
               <p className="text-xs uppercase tracking-[0.2em] text-fg-subtle mb-3">Technology</p>
@@ -112,6 +160,22 @@ function ModalBlock({ label, text }: { label: string; text: string }) {
     <div>
       <p className="text-xs uppercase tracking-[0.2em] text-fg-subtle mb-1.5">{label}</p>
       <p className="text-fg-muted leading-relaxed text-[15px]">{text}</p>
+    </div>
+  );
+}
+
+function ModalList({ label, items }: { label: string; items: string[] }) {
+  return (
+    <div className="mt-8">
+      <p className="text-xs uppercase tracking-[0.2em] text-fg-subtle mb-3">{label}</p>
+      <ul className="space-y-2.5">
+        {items.map((item) => (
+          <li key={item} className="flex gap-3 text-fg-muted leading-relaxed text-[15px]">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
