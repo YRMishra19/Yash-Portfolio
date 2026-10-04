@@ -125,6 +125,20 @@ function ProjectVisual({ project }: { project: Project }) {
             decoding="async"
             className="block w-full h-auto transition-transform duration-700 group-hover:scale-[1.02]"
           />
+        ) : project.logo ? (
+          <div className="flex flex-col items-center justify-center gap-5 bg-[#fcfcfc] px-6 py-12 md:py-16">
+            <img
+              src={project.logo}
+              alt={project.logoAlt ?? project.title}
+              loading="lazy"
+              decoding="async"
+              className="h-24 md:h-32 w-auto max-w-full object-contain"
+            />
+            <p className="flex items-center gap-2 text-xs text-fg-subtle">
+              <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+              Internal company platform - not publicly accessible
+            </p>
+          </div>
         ) : (
           <div className="p-6 md:p-8">
             <ol className="space-y-3">

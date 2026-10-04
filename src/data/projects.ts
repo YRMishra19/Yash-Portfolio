@@ -15,6 +15,9 @@ export type Project = {
   image?: string;
   imageAlt?: string;
   imageCaption?: string;
+  /** Company logo shown instead of a screenshot (e.g. internal platforms). */
+  logo?: string;
+  logoAlt?: string;
   /** Headline numbers shown as stat tiles. */
   metrics?: { value: string; label: string }[];
   /** Short pipeline steps rendered as a flow strip. */
@@ -103,18 +106,22 @@ export const projects: Project[] = [
     id: "jamsan-social-hub",
     title: "Jamsan Social Hub",
     category: "AI / Internal Platform",
-    status: "In Progress",
+    status: "Live",
     problem:
       "The social/marketing team managing 270+ social handles across 20+ hotel properties had no central place for account details, content assets, or performance history - everything lived in scattered folders and inboxes.",
     approach:
       "As the sole business analyst and builder, gathered requirements from 5 stakeholders (leadership, marketing, property, IT) and designed the data architecture - a schema to structure and store multi-format data (JSON metadata, image/video assets) and engagement metrics (views, likes, reposts, visitors).",
     solution:
       "An internal platform combining a property/account directory, a tagged content library, an AI chatbot to search stored content, Canva and Gemini integration for content creation, and a yearly reporting dashboard for team presentations.",
-    result: "In active development, being built for presentation at the company's yearly review.",
+    result:
+      "Up and running internally for the social/marketing team, and being prepared for presentation at the company's yearly review.",
     role: "Sole business analyst and builder - specs, data architecture, backend, and integrations.",
     tech: ["Python", "JavaScript", "Google Gemini", "Canva API", "Google Drive"],
     links: [],
     featured: true,
+    logo: "/images/logos/jamsan.jpg",
+    logoAlt: "Jamsan Management logo",
+    imageCaption: "Jamsan Management - internal platform",
     metrics: [
       { value: "270+", label: "Social handles" },
       { value: "20+", label: "Hotel properties" },
