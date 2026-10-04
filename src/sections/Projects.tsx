@@ -125,6 +125,20 @@ function ProjectVisual({ project }: { project: Project }) {
             decoding="async"
             className="block w-full h-auto transition-transform duration-700 group-hover:scale-[1.02]"
           />
+        ) : project.gallery ? (
+          <div className="grid grid-cols-2 gap-px bg-border">
+            {project.gallery.slice(0, 4).map((shot) => (
+              <figure key={shot.src} className="bg-white">
+                <img
+                  src={shot.src}
+                  alt={shot.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="block w-full h-auto"
+                />
+              </figure>
+            ))}
+          </div>
         ) : project.logo ? (
           <div className="flex flex-col items-center justify-center gap-5 bg-[#fcfcfc] px-6 py-12 md:py-16">
             <img

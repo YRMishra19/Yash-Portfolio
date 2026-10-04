@@ -15,6 +15,8 @@ export type Project = {
   image?: string;
   imageAlt?: string;
   imageCaption?: string;
+  /** Extra outcome images (e.g. analysis plots) shown as a gallery. */
+  gallery?: { src: string; alt: string; caption: string }[];
   /** Company logo shown instead of a screenshot (e.g. internal platforms). */
   logo?: string;
   logoAlt?: string;
@@ -100,6 +102,69 @@ export const projects: Project[] = [
       "Add deposits and direct-booking incentives to cut OTA cancellations.",
       "Use flexible-but-prepaid pricing for early reservations.",
       "Pre-plan campaigns and staffing for August; focus marketing on Portugal, the UK and France.",
+    ],
+  },
+  {
+    id: "credit-card-prediction",
+    title: "Credit Card Ownership Prediction",
+    category: "Data Mining / Machine Learning",
+    status: "Live",
+    problem:
+      "A bank wants to know which customers are likely to hold a credit card, so it can target offers instead of mass-marketing - but with 14 mixed financial and demographic variables, it isn't obvious which ones actually matter.",
+    approach:
+      "Profiled 5,000 customer records in R: examined distributions, cleaned and re-typed variables, flagged outliers with boxplots, then tested for heteroscedasticity (Breusch-Pagan) and corrected standard errors with HC1 robust estimation before fitting logistic regression models and narrowing the predictor set iteratively.",
+    solution:
+      "A logistic regression classifier built on the four statistically significant drivers, evaluated on a 70/30 train-test split with an optimal-cutoff search and a confusion matrix.",
+    result:
+      "Identified CD account, securities account, personal loan and family size as the significant drivers of credit card ownership.",
+    role: "Team project - data cleaning, outlier detection, and heteroscedasticity testing with robust standard errors.",
+    tech: ["R", "tidyverse", "ggplot2", "caret", "lmtest / sandwich", "Logistic Regression"],
+    links: [{ label: "View on GitHub", href: "https://github.com/YRMishra19/CreditCard-Prediction-Data-Mining" }],
+    featured: true,
+    imageCaption: "Exploratory analysis - R / ggplot2",
+    gallery: [
+      {
+        src: "/images/projects/credit-card/income-distribution.png",
+        alt: "Histogram of customer income with density curve, skewed right",
+        caption: "Income is right-skewed",
+      },
+      {
+        src: "/images/projects/credit-card/experience-distribution.png",
+        alt: "Histogram of customer experience in years with density curve",
+        caption: "Experience distribution",
+      },
+      {
+        src: "/images/projects/credit-card/ccavg-outliers.png",
+        alt: "Boxplot of average monthly credit card spend showing many high outliers",
+        caption: "CCAvg outliers",
+      },
+      {
+        src: "/images/projects/credit-card/income-outliers.png",
+        alt: "Boxplot of customer income showing high outliers",
+        caption: "Income outliers",
+      },
+      {
+        src: "/images/projects/credit-card/personal-loan-balance.png",
+        alt: "Bar chart showing most customers have not taken a personal loan",
+        caption: "Personal loan: heavy class imbalance",
+      },
+      {
+        src: "/images/projects/credit-card/securities-account-balance.png",
+        alt: "Bar chart showing most customers do not hold a securities account",
+        caption: "Securities account: heavy class imbalance",
+      },
+    ],
+    metrics: [
+      { value: "5,000", label: "Customer records" },
+      { value: "14", label: "Variables" },
+      { value: "70/30", label: "Train-test split" },
+      { value: "4", label: "Significant predictors" },
+    ],
+    pipeline: ["EDA & distributions", "Cleaning & outlier checks", "Breusch-Pagan + HC1 robust errors", "Logistic regression & confusion matrix"],
+    findings: [
+      "CD account, securities account, personal loan status and family size emerged as the statistically significant predictors.",
+      "Income and average card spend (CCAvg) contain clear outliers; the Breusch-Pagan test rejected constant variance, so robust (HC1) standard errors were used.",
+      "Personal loan and securities-account holders are a small minority of customers, so the classes are imbalanced - which is why an optimal-cutoff search was used instead of a default 0.5 threshold.",
     ],
   },
   {

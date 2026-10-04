@@ -78,6 +78,22 @@ export function ProjectModal({ project, onClose }: { project: Project | null; on
               </figure>
             )}
 
+            {project.gallery && (
+              <div className="mt-8">
+                <p className="text-xs uppercase tracking-[0.2em] text-fg-subtle mb-3">Analysis outputs</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {project.gallery.map((shot) => (
+                    <figure key={shot.src} className="rounded-xl border border-border bg-white overflow-hidden">
+                      <img src={shot.src} alt={shot.alt} loading="lazy" className="block w-full h-auto" />
+                      <figcaption className="border-t border-border px-3 py-2 text-xs text-fg-subtle bg-bg-card">
+                        {shot.caption}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {project.metrics && (
               <dl className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
                 {project.metrics.map((metric) => (
