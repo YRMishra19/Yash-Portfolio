@@ -62,7 +62,7 @@ export function Hero() {
     >
       {/* Giant faded monogram behind everything */}
       <div
-        className="pointer-events-none absolute inset-0 flex select-none items-end justify-center overflow-hidden pb-[14%] sm:pb-[10%] lg:items-center lg:pb-0"
+        className="pointer-events-none absolute inset-0 flex select-none items-start justify-center overflow-hidden pt-[60vw] sm:pt-[27vw] lg:items-center lg:pt-0"
         aria-hidden="true"
       >
         <span className="translate-y-[2%] font-sans text-[46vw] font-extrabold leading-none tracking-[-0.07em] text-bg-elevated sm:text-[40vw] lg:translate-x-[6%] lg:text-[34vw]">
@@ -108,9 +108,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4 }}
-              className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              className="mt-9 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center"
             >
-              <Button href="#projects" variant="primary" className="w-full sm:w-auto">
+              <Button href="#projects" variant="primary" className="col-span-2 w-full sm:col-span-1 sm:w-auto">
                 Explore work
                 <ArrowDown className="h-4 w-4 -rotate-90" aria-hidden="true" />
               </Button>
@@ -118,7 +118,8 @@ export function Hero() {
                 Let's talk
               </Button>
               <Button href={profile.resumeUrl} variant="outline" download className="w-full sm:w-auto">
-                Download Resume
+                <span className="sm:hidden">Resume</span>
+                <span className="hidden sm:inline">Download Resume</span>
               </Button>
             </motion.div>
 
@@ -174,7 +175,7 @@ export function Hero() {
               preload="metadata"
               playsInline
               aria-label={`${profile.name} introducing himself`}
-              className="relative mx-auto block aspect-[720/876] h-auto w-full max-w-[300px] select-none object-cover mix-blend-multiply sm:max-w-[400px] lg:max-h-[min(78svh,620px)] lg:w-auto lg:max-w-full"
+              className="relative mx-auto block aspect-[720/876] h-auto w-full max-w-[330px] select-none object-cover mix-blend-multiply sm:max-w-[400px] lg:max-h-[min(78svh,620px)] lg:w-auto lg:max-w-full"
               style={FADE_MASK}
               onEnded={() => {
                 setPlaying(false);
@@ -187,7 +188,7 @@ export function Hero() {
             {/* Sound button */}
             <div className="absolute right-[4%] top-[2%] z-20 flex items-center gap-3 sm:right-[6%] sm:top-[6%]">
               <span
-                className="hidden rounded-full bg-bg-card/90 px-3 py-1.5 text-[0.7rem] font-medium uppercase tracking-[0.14em] text-fg shadow-sm backdrop-blur sm:inline-block"
+                className="rounded-full bg-bg-card/90 px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.14em] text-fg shadow-sm backdrop-blur sm:text-[0.7rem]"
                 aria-hidden="true"
               >
                 {playing ? "Playing - tap to pause" : "Watch my intro"}
