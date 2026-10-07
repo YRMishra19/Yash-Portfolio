@@ -71,7 +71,7 @@ export function Hero() {
       </div>
 
       <Container className="relative w-full">
-        <div className="grid items-end gap-6 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-4">
+        <div className="grid items-end gap-6 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:gap-4">
           {/* Text column */}
           <div className="self-center pb-4 lg:pb-16">
             <motion.p
@@ -174,7 +174,7 @@ export function Hero() {
               preload="metadata"
               playsInline
               aria-label={`${profile.name} introducing himself`}
-              className="relative mx-auto block aspect-[9/16] h-auto w-full max-w-[260px] select-none object-cover mix-blend-multiply sm:max-w-[340px] lg:max-h-[calc(100svh-7rem)] lg:w-auto lg:max-w-none"
+              className="relative mx-auto block aspect-[720/876] h-auto w-full max-w-[300px] select-none object-cover mix-blend-multiply sm:max-w-[400px] lg:max-h-[min(78svh,620px)] lg:w-auto lg:max-w-full"
               style={FADE_MASK}
               onEnded={() => {
                 setPlaying(false);
