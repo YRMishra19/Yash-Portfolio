@@ -172,7 +172,7 @@ export function ConsultationForm() {
           </>
         ) : (
           <>
-            Request a Consultation <Send className="h-4 w-4" aria-hidden="true" />
+            Meet me <Send className="h-4 w-4" aria-hidden="true" />
           </>
         )}
       </button>

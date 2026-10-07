@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Play, Volume2 } from "lucide-react";
 import { profile } from "../data/profile";
@@ -9,6 +9,11 @@ import { Container } from "../components/Container";
 
 const INTRO_VIDEO = "/media/yash-intro.mp4";
 const INTRO_POSTER = "/media/yash-intro-poster.webp";
+// The intro is a "stacked alpha" video: the top half is the portrait, the bottom half is its
+// transparency matte. Each frame is composited onto a canvas, giving a crisp cut-out with real
+// transparency (no blend-mode tinting where the faded YRM lettering sits behind the face).
+const FRAME_W = 960;
+const FRAME_H = 1168;
 const FADE_MASK = {
   WebkitMaskImage:
     "linear-gradient(to bottom, #000 80%, transparent 100%), linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%)",
@@ -29,7 +34,68 @@ const HERO_LINKS = ["LinkedIn", "GitHub", "YouTube", "Y-PROC"];
 export function Hero() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const bufferRef = useRef<HTMLCanvasElement | null>(null);
+  const rafRef = useRef<number | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [started, setStarted] = useState(false);
+
+  const paintFrame = useCallback(() => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas || video.readyState < 2) return;
+    let buffer = bufferRef.current;
+    if (!buffer) {
+      buffer = document.createElement("canvas");
+      buffer.width = FRAME_W;
+      buffer.height = FRAME_H * 2;
+      bufferRef.current = buffer;
+    }
+    const bctx = buffer.getContext("2d", { willReadFrequently: true });
+    const ctx = canvas.getContext("2d");
+    if (!bctx || !ctx) return;
+    bctx.drawImage(video, 0, 0, FRAME_W, FRAME_H * 2);
+    const frame = bctx.getImageData(0, 0, FRAME_W, FRAME_H * 2);
+    const px = frame.data;
+    const half = FRAME_W * FRAME_H;
+    const out = ctx.createImageData(FRAME_W, FRAME_H);
+    const o = out.data;
+    for (let i = 0; i < half; i++) {
+      const v = px[i * 4];
+      const j = i * 4;
+      o[j] = v;
+      o[j + 1] = v;
+      o[j + 2] = v;
+      o[j + 3] = px[(i + half) * 4];
+    }
+    ctx.putImageData(out, 0, 0);
+    setStarted(true);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !playing) return;
+    let cancelled = false;
+    type FrameVideo = HTMLVideoElement & {
+      requestVideoFrameCallback?: (cb: () => void) => number;
+      cancelVideoFrameCallback?: (id: number) => void;
+    };
+    const fv = video as FrameVideo;
+    const tick = () => {
+      if (cancelled) return;
+      paintFrame();
+      if (fv.requestVideoFrameCallback) rafRef.current = fv.requestVideoFrameCallback(tick);
+      else rafRef.current = requestAnimationFrame(tick);
+    };
+    tick();
+    return () => {
+      cancelled = true;
+      if (rafRef.current !== null) {
+        if (fv.cancelVideoFrameCallback) fv.cancelVideoFrameCallback(rafRef.current);
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [playing, paintFrame]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -168,22 +234,41 @@ export function Hero() {
             transition={{ duration: 0.9, delay: 0.2 }}
             className="relative order-first mx-auto w-full max-w-[420px] sm:max-w-[520px] lg:order-none lg:max-w-none"
           >
-            <video
-              ref={videoRef}
-              src={INTRO_VIDEO}
-              poster={INTRO_POSTER}
-              preload="metadata"
-              playsInline
-              aria-label={`${profile.name} introducing himself`}
-              className="relative mx-auto block aspect-[720/876] h-auto w-full max-w-[330px] select-none object-cover mix-blend-multiply sm:max-w-[400px] lg:max-h-[min(78svh,620px)] lg:w-auto lg:max-w-full"
+            <div
+              className="relative mx-auto aspect-[960/1168] w-full max-w-[330px] select-none sm:max-w-[400px] lg:max-h-[min(78svh,620px)] lg:w-auto lg:max-w-full"
               style={FADE_MASK}
-              onEnded={() => {
-                setPlaying(false);
-                if (videoRef.current) videoRef.current.currentTime = 0;
-              }}
-              onPause={() => setPlaying(false)}
-              onPlay={() => setPlaying(true)}
-            />
+            >
+              <img
+                src={INTRO_POSTER}
+                alt={profile.name}
+                width={FRAME_W}
+                height={FRAME_H}
+                decoding="async"
+                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-200 ${started ? "opacity-0" : "opacity-100"}`}
+              />
+              <canvas
+                ref={canvasRef}
+                width={FRAME_W}
+                height={FRAME_H}
+                aria-hidden="true"
+                className={`absolute inset-0 h-full w-full ${started ? "opacity-100" : "opacity-0"}`}
+              />
+              <video
+                ref={videoRef}
+                src={INTRO_VIDEO}
+                preload="auto"
+                playsInline
+                aria-label={`${profile.name} introducing himself`}
+                className="pointer-events-none absolute h-px w-px opacity-0"
+                onEnded={() => {
+                  setPlaying(false);
+                  setStarted(false);
+                  if (videoRef.current) videoRef.current.currentTime = 0;
+                }}
+                onPause={() => setPlaying(false)}
+                onPlay={() => setPlaying(true)}
+              />
+            </div>
 
             {/* Sound button */}
             <div className="absolute right-[4%] top-[2%] z-20 flex items-center gap-3 sm:right-[6%] sm:top-[6%]">
