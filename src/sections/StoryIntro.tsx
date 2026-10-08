@@ -27,6 +27,8 @@ export function StoryIntro() {
   const crossRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const subRef = useRef<HTMLParagraphElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
+  const scrimRef = useRef<HTMLDivElement>(null);
+  const subScrimRef = useRef<HTMLDivElement>(null);
 
   const apply = useCallback(
     (p: number) => {
@@ -42,12 +44,14 @@ export function StoryIntro() {
           el.style.opacity = String(0.14 + 0.86 * t);
           el.style.transform = `translateY(${26 * (1 - t)}px) scale(${0.94 + 0.06 * t})`;
           el.style.filter = `blur(${(10 * (1 - t)).toFixed(2)}px)`;
-          el.style.textShadow = `0 0 ${(38 * t).toFixed(1)}px ${w.color}${Math.round(0x88 * t).toString(16).padStart(2, "0")}`;
+          el.style.textShadow = `0 2px 16px rgba(2,8,6,${(0.85 * t).toFixed(2)}), 0 0 ${(34 * t).toFixed(1)}px ${w.color}${Math.round(0x70 * t).toString(16).padStart(2, "0")}`;
         }
         const x = crossRefs.current[i];
         if (x) x.style.opacity = String(seg(p, w.range[1] - 0.04, w.range[1]));
       });
+      if (scrimRef.current) scrimRef.current.style.opacity = String(seg(p, 0.08, 0.3));
       const sub = seg(p, 0.66, 0.84);
+      if (subScrimRef.current) subScrimRef.current.style.opacity = String(sub);
       if (subRef.current) {
         subRef.current.style.opacity = String(0.14 + 0.86 * sub);
         subRef.current.style.transform = `translateY(${26 * (1 - sub)}px)`;
@@ -85,16 +89,24 @@ export function StoryIntro() {
         <div className="relative z-10 mx-auto flex h-svh min-h-[34rem] max-w-6xl flex-col justify-between px-6 pb-12 pt-28 text-center md:pb-16 md:pt-32">
           <div ref={introRef} style={enabled ? { opacity: 0.14 } : undefined}>
             <p className="text-[0.7rem] font-medium uppercase tracking-[0.4em] text-white/80 md:text-xs">Where I build</p>
-            <h2 className="mt-4 font-display text-3xl leading-tight text-white sm:text-4xl md:text-5xl">
+            <h2 className="mt-4 font-display text-3xl leading-tight text-white [text-shadow:0_2px_16px_rgba(2,8,6,0.9)] sm:text-4xl md:text-5xl">
               Building at the intersection of
             </h2>
           </div>
 
           <div>
             <h2 className="sr-only">Data, Business and AI</h2>
+            <div className="relative">
+            {/* Soft dark backing so the words stay crisp over the bright particle field */}
+            <div
+              ref={scrimRef}
+              aria-hidden="true"
+              style={{ opacity: enabled ? 0 : 0.6 }}
+              className="pointer-events-none absolute -inset-x-[8%] -inset-y-8 bg-[radial-gradient(ellipse_at_center,rgba(2,8,6,0.82)_0%,rgba(2,8,6,0.6)_50%,transparent_78%)] blur-lg"
+            />
             <div
               aria-hidden="true"
-              className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-display text-[2.6rem] leading-none sm:text-6xl md:gap-x-8 md:text-7xl lg:text-8xl"
+              className="relative flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-display text-[2.6rem] leading-none sm:text-6xl md:gap-x-8 md:text-7xl lg:text-8xl"
             >
               {WORDS.map((w, i) => (
                 <span key={w.label} className="inline-flex items-center gap-4 md:gap-8">
@@ -112,7 +124,7 @@ export function StoryIntro() {
                       ref={(el) => {
                         crossRefs.current[i] = el;
                       }}
-                      className="text-2xl text-white/60 sm:text-4xl md:text-5xl"
+                      className="text-3xl font-light text-white [text-shadow:0_2px_14px_rgba(2,8,6,0.95)] sm:text-4xl md:text-5xl"
                       style={{ opacity: enabled ? 0 : 1 }}
                     >
                       ×
@@ -121,14 +133,23 @@ export function StoryIntro() {
                 </span>
               ))}
             </div>
+            </div>
+            <div className="relative">
+            <div
+              ref={subScrimRef}
+              aria-hidden="true"
+              style={{ opacity: enabled ? 0 : 0.5 }}
+              className="pointer-events-none absolute -inset-x-[6%] -inset-y-4 bg-[radial-gradient(ellipse_at_center,rgba(2,8,6,0.75)_0%,rgba(2,8,6,0.5)_55%,transparent_80%)] blur-lg"
+            />
             <p
               ref={subRef}
               style={enabled ? { opacity: 0.14 } : undefined}
-              className="mx-auto mt-8 max-w-2xl text-balance text-base leading-relaxed text-white md:mt-10 md:text-lg"
+              className="relative mx-auto mt-8 max-w-2xl text-balance [text-shadow:0_1px_12px_rgba(2,8,6,0.9)] text-base leading-relaxed text-white md:mt-10 md:text-lg"
             >
               Every dashboard I build, every report I automate, and every product I ship starts with the same
               question: what decision does this actually change?
             </p>
+            </div>
             {enabled && (
               <div ref={cueRef} className="mt-8 flex flex-col items-center gap-2 text-[0.65rem] uppercase tracking-[0.35em] text-white/70" aria-hidden="true">
                 Scroll

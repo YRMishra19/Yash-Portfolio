@@ -37,7 +37,7 @@ export function SocialIcons({
             title={link.name}
             className={
               variant === "bare"
-                ? "inline-flex items-center justify-center text-fg-muted transition-colors hover:text-accent hover:-translate-y-0.5"
+                ? "inline-flex items-center justify-center text-fg transition-colors hover:text-accent hover:-translate-y-0.5"
                 : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-fg-muted transition-colors hover:border-accent hover:text-accent"
             }
           >

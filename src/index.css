@@ -187,7 +187,8 @@
 /* ---------- Dark "cinematic" sections (Y-PROC, Contact) ----------
    Re-maps the colour tokens inside the scope so every existing utility
    (text-fg, bg-bg-card, border-border …) restyles itself. */
-.theme-dark {
+.theme-dark,
+.rail-on-dark {
   --color-bg: #07110f;
   --color-bg-elevated: #0e1d19;
   --color-bg-card: #0d1a16;
@@ -199,10 +200,17 @@
   --color-accent-strong: #5fe0c5;
   --color-border: #ffffff17;
   --color-border-strong: #ffffff2b;
-  background-color: var(--color-bg);
-  color: var(--color-fg);
   color-scheme: dark;
   -webkit-font-smoothing: antialiased;
+}
+.theme-dark {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+}
+.rail-on-dark {
+  --color-fg: #ffffff;
+  --color-fg-muted: #e6eeea;
+  --color-border-strong: #ffffff55;
 }
 .theme-dark ::selection {
   background: #3ccfb04d;
