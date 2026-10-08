@@ -7,6 +7,7 @@ import { PortraitImage } from "../components/PortraitImage";
 import { Reveal } from "../components/Reveal";
 import { SocialIcons } from "../components/SocialIcons";
 import { TiltCard } from "../components/TiltCard";
+import { TopicPicker } from "../components/TopicPicker";
 import { profile } from "../data/profile";
 import { socialLinks } from "../data/social";
 import { useWebGL } from "../hooks/useWebGL";
@@ -69,25 +70,9 @@ export function Contact() {
 
         <div className="mt-14 grid items-start gap-10 md:mt-20 md:grid-cols-[0.85fr_1.15fr] md:gap-14">
           <div className="order-2 md:order-1">
-            <Reveal delay={0.05}>
-              <p className="mb-4 text-xs uppercase tracking-[0.2em] text-fg-subtle">What we can talk about</p>
-              <div className="flex flex-wrap gap-2.5" role="group" aria-label="Conversation topics">
-                {REASONS.map((r) => (
-                  <button
-                    key={r}
-                    type="button"
-                    onClick={() => setReason(r)}
-                    aria-pressed={reason === r}
-                    className={`rounded-full border px-4 py-2 text-sm transition-all duration-300 focus-visible:outline-2 focus-visible:outline-accent ${
-                      reason === r
-                        ? "border-accent bg-accent/15 text-accent shadow-[0_0_30px_-8px_rgba(60,207,176,0.7)]"
-                        : "border-border-strong bg-white/[0.03] text-fg-muted hover:border-accent/60 hover:text-fg"
-                    }`}
-                  >
-                    {r}
-                  </button>
-                ))}
-              </div>
+            <Reveal delay={0.05} className="relative z-20">
+              <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-fg-muted">What we can talk about</p>
+              <TopicPicker options={REASONS} value={reason} onChange={setReason} />
             </Reveal>
 
             <Reveal delay={0.12}>

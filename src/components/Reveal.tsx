@@ -17,14 +17,10 @@ export function Reveal({ children, delay = 0, y = 28, className, as = "div" }: R
     hidden: {
       opacity: 0,
       y: prefersReducedMotion ? 0 : y,
-      rotateX: prefersReducedMotion ? 0 : 9,
-      transformPerspective: 1000,
     },
     visible: {
       opacity: 1,
       y: 0,
-      rotateX: 0,
-      transformPerspective: 1000,
       transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
     },
   };

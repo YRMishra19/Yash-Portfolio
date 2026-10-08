@@ -84,8 +84,8 @@ export function StoryIntro() {
 
         <div className="relative z-10 mx-auto flex h-svh min-h-[34rem] max-w-6xl flex-col justify-between px-6 pb-12 pt-28 text-center md:pb-16 md:pt-32">
           <div ref={introRef} style={enabled ? { opacity: 0.14 } : undefined}>
-            <p className="text-[0.7rem] font-medium uppercase tracking-[0.4em] text-white/55 md:text-xs">Where I build</p>
-            <h2 className="mt-4 font-display text-3xl leading-tight text-white/90 sm:text-4xl md:text-5xl">
+            <p className="text-[0.7rem] font-medium uppercase tracking-[0.4em] text-white/80 md:text-xs">Where I build</p>
+            <h2 className="mt-4 font-display text-3xl leading-tight text-white sm:text-4xl md:text-5xl">
               Building at the intersection of
             </h2>
           </div>
@@ -112,7 +112,7 @@ export function StoryIntro() {
                       ref={(el) => {
                         crossRefs.current[i] = el;
                       }}
-                      className="text-2xl text-white/35 sm:text-4xl md:text-5xl"
+                      className="text-2xl text-white/60 sm:text-4xl md:text-5xl"
                       style={{ opacity: enabled ? 0 : 1 }}
                     >
                       ×
@@ -124,13 +124,13 @@ export function StoryIntro() {
             <p
               ref={subRef}
               style={enabled ? { opacity: 0.14 } : undefined}
-              className="mx-auto mt-8 max-w-2xl text-balance text-base leading-relaxed text-white/70 md:mt-10 md:text-lg"
+              className="mx-auto mt-8 max-w-2xl text-balance text-base leading-relaxed text-white md:mt-10 md:text-lg"
             >
               Every dashboard I build, every report I automate, and every product I ship starts with the same
               question: what decision does this actually change?
             </p>
             {enabled && (
-              <div ref={cueRef} className="mt-8 flex flex-col items-center gap-2 text-[0.65rem] uppercase tracking-[0.35em] text-white/40" aria-hidden="true">
+              <div ref={cueRef} className="mt-8 flex flex-col items-center gap-2 text-[0.65rem] uppercase tracking-[0.35em] text-white/70" aria-hidden="true">
                 Scroll
                 <span className="h-8 w-px bg-gradient-to-b from-white/50 to-transparent" />
               </div>

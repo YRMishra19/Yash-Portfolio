@@ -5,9 +5,9 @@
   --color-bg: #f6f1e7;
   --color-bg-elevated: #ece2cf;
   --color-bg-card: #fffcf5;
-  --color-fg: #201c16;
-  --color-fg-muted: #5c5347;
-  --color-fg-subtle: #948a79;
+  --color-fg: #17130e;
+  --color-fg-muted: #433b30;
+  --color-fg-subtle: #655b4c;
   --color-accent: #12665a;
   --color-accent-soft: #12665a1f;
   --color-accent-strong: #16897a;
@@ -54,8 +54,10 @@
     background-color: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
     text-rendering: optimizeLegibility;
+    font-weight: 450;
   }
 
   ::selection {
@@ -156,7 +158,7 @@
 .hero-lite-stage { animation: hero-lite-sway 7s ease-in-out infinite; }
 .hero-lite-bar { transform-origin: bottom center; animation: hero-lite-rise 3.6s ease-in-out infinite; }
 
-.tilt-card { transform-style: preserve-3d; will-change: transform; }
+.tilt-card { transform: none; }
 .tilt-glare {
   pointer-events: none;
   position: absolute;
@@ -189,9 +191,9 @@
   --color-bg: #07110f;
   --color-bg-elevated: #0e1d19;
   --color-bg-card: #0d1a16;
-  --color-fg: #eef3ee;
-  --color-fg-muted: #a9b8b1;
-  --color-fg-subtle: #7d9189;
+  --color-fg: #f7fbf7;
+  --color-fg-muted: #cad7d1;
+  --color-fg-subtle: #a6b9b1;
   --color-accent: #3ccfb0;
   --color-accent-soft: #3ccfb01f;
   --color-accent-strong: #5fe0c5;
@@ -200,6 +202,7 @@
   background-color: var(--color-bg);
   color: var(--color-fg);
   color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
 }
 .theme-dark ::selection {
   background: #3ccfb04d;
@@ -229,9 +232,9 @@
 @media (min-width: 768px) {
   .layer-card {
     transform: translate3d(
-      calc(var(--i) * 18px * var(--spread, 1)),
+      calc(var(--i) * 12px * var(--spread, 1)),
       calc(var(--i) * 6px * var(--spread, 1)),
-      calc(var(--i) * 52px * var(--spread, 1) + var(--lift, 0px))
+      calc(var(--i) * 40px * var(--spread, 1) + var(--lift, 0px))
     );
   }
 }

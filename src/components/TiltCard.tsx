@@ -14,6 +14,7 @@ type TiltCardProps = {
 export function TiltCard({ children, className = "", max = 5 }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const raf = useRef(0);
+  const reset = useRef(0);
 
   const enabled = () =>
     typeof window !== "undefined" &&
@@ -27,8 +28,9 @@ export function TiltCard({ children, className = "", max = 5 }: TiltCardProps) {
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
     cancelAnimationFrame(raf.current);
+    window.clearTimeout(reset.current);
     raf.current = requestAnimationFrame(() => {
-      el.style.transform = `perspective(1100px) rotateX(${(0.5 - py) * max * 2}deg) rotateY(${(px - 0.5) * max * 2}deg) translateZ(0) scale3d(1.012, 1.012, 1.012)`;
+      el.style.transform = `perspective(1100px) rotateX(${(0.5 - py) * max * 2}deg) rotateY(${(px - 0.5) * max * 2}deg)`;
       el.style.setProperty("--gx", `${px * 100}%`);
       el.style.setProperty("--gy", `${py * 100}%`);
     });
@@ -38,7 +40,12 @@ export function TiltCard({ children, className = "", max = 5 }: TiltCardProps) {
     const el = ref.current;
     if (!el) return;
     cancelAnimationFrame(raf.current);
-    el.style.transform = "perspective(1100px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+    el.style.transform = "perspective(1100px) rotateX(0deg) rotateY(0deg)";
+    window.clearTimeout(reset.current);
+    // Drop the transform entirely once flat so text is rasterised crisply.
+    reset.current = window.setTimeout(() => {
+      el.style.transform = "none";
+    }, 340);
   };
 
   return (

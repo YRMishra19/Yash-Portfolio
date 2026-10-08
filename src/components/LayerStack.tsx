@@ -36,8 +36,8 @@ export function LayerStack({ layers }: { layers: Layer[] }) {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!fine || reduced) return;
     let raf = 0;
-    let tx = -14;
-    let ty = 9;
+    let tx = -9;
+    let ty = 5;
     let cx = tx;
     let cy = ty;
     let running = false;
@@ -58,13 +58,13 @@ export function LayerStack({ layers }: { layers: Layer[] }) {
       const r = el.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
       const py = (e.clientY - r.top) / r.height - 0.5;
-      tx = -14 + px * 16;
-      ty = 9 - py * 10;
+      tx = -9 + px * 10;
+      ty = 5 - py * 6;
       kick();
     };
     const leave = () => {
-      tx = -14;
-      ty = 9;
+      tx = -9;
+      ty = 5;
       kick();
     };
     el.addEventListener("pointermove", move);
@@ -81,7 +81,7 @@ export function LayerStack({ layers }: { layers: Layer[] }) {
     <div ref={wrap} className="relative md:[perspective:1500px] md:py-6">
       <ol
         ref={body}
-        className="relative space-y-4 md:space-y-5 md:[transform-style:preserve-3d] md:[transform:rotateX(9deg)_rotateY(-14deg)]"
+        className="relative space-y-4 md:space-y-5 md:[transform-style:preserve-3d] md:[transform:rotateX(5deg)_rotateY(-9deg)]"
         style={{ ["--spread" as string]: 1 }}
       >
         {layers.map((layer, i) => (
