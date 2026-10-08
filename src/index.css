@@ -172,3 +172,77 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-lite-stage, .hero-lite-bar { animation: none; }
 }
+
+@keyframes depth-chip-bob {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -9px; }
+}
+.depth-chip { animation: depth-chip-bob 4.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .depth-chip { animation: none; }
+}
+
+/* ---------- Dark "cinematic" sections (Y-PROC, Contact) ----------
+   Re-maps the colour tokens inside the scope so every existing utility
+   (text-fg, bg-bg-card, border-border …) restyles itself. */
+.theme-dark {
+  --color-bg: #07110f;
+  --color-bg-elevated: #0e1d19;
+  --color-bg-card: #0d1a16;
+  --color-fg: #eef3ee;
+  --color-fg-muted: #a9b8b1;
+  --color-fg-subtle: #7d9189;
+  --color-accent: #3ccfb0;
+  --color-accent-soft: #3ccfb01f;
+  --color-accent-strong: #5fe0c5;
+  --color-border: #ffffff17;
+  --color-border-strong: #ffffff2b;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  color-scheme: dark;
+}
+.theme-dark ::selection {
+  background: #3ccfb04d;
+}
+
+/* Perspective floor grid used behind dark sections */
+.floor-grid {
+  background-image:
+    linear-gradient(to right, rgba(60, 207, 176, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(60, 207, 176, 0.22) 1px, transparent 1px);
+  background-size: 56px 56px;
+  transform: perspective(520px) rotateX(62deg);
+  transform-origin: 50% 100%;
+  mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+  animation: floor-drift 6s linear infinite;
+}
+@keyframes floor-drift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 0 56px, 0 56px; }
+}
+
+/* Exploded layer stack (Y-PROC "How it works") */
+.layer-card {
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+@media (min-width: 768px) {
+  .layer-card {
+    transform: translate3d(
+      calc(var(--i) * 18px * var(--spread, 1)),
+      calc(var(--i) * 6px * var(--spread, 1)),
+      calc(var(--i) * 52px * var(--spread, 1) + var(--lift, 0px))
+    );
+  }
+}
+.layer-card:hover,
+.layer-card:focus-within {
+  --lift: 46px;
+  border-color: rgba(95, 224, 197, 0.55);
+  box-shadow: 0 30px 70px -24px rgba(60, 207, 176, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floor-grid { animation: none; }
+  .layer-card { transition: none; }
+}

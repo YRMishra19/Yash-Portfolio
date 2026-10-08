@@ -1,5 +1,5 @@
 import { AlertCircle, CheckCircle2, Loader2, Send } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { cn } from "../lib/utils";
 
 type FormState = {
@@ -12,7 +12,7 @@ type FormState = {
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const REASONS = [
+export const REASONS = [
   "Career / job search question",
   "Business intelligence or analytics project",
   "AI / automation consulting",
@@ -37,8 +37,13 @@ const CONTACT_ENDPOINT =
 const CONTACT_TOKEN = "uby67piqgWODocoV8AfbQif_RcMyXRMo";
 const DEMO_MODE = CONTACT_ENDPOINT.length === 0;
 
-export function ConsultationForm() {
+export function ConsultationForm({ reason }: { reason?: string }) {
   const [values, setValues] = useState<FormState>(initialState);
+
+  // Lets the topic chips beside the form preselect the reason.
+  useEffect(() => {
+    if (reason) setValues((prev) => ({ ...prev, reason }));
+  }, [reason]);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");

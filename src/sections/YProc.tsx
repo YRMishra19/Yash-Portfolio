@@ -1,5 +1,6 @@
 import { ExternalLink } from "lucide-react";
 import { Container } from "../components/Container";
+import { LayerStack } from "../components/LayerStack";
 import { PortraitImage } from "../components/PortraitImage";
 import { Reveal } from "../components/Reveal";
 import { profile } from "../data/profile";
@@ -7,11 +8,18 @@ import { yproc } from "../data/yproc";
 
 export function YProc() {
   return (
-    <section id="y-proc" className="py-28 md:py-36 relative overflow-hidden" aria-label="Y-PROC">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-bg-elevated/60 via-bg to-bg" />
+    <section id="y-proc" className="theme-dark py-28 md:py-36 relative overflow-hidden isolate" aria-label="Y-PROC">
+      <div
+        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_0%,#12362e_0%,#08150f_55%,#050c0a_100%)]"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-[46%] overflow-hidden [perspective:700px]" aria-hidden="true">
+        <div className="floor-grid absolute inset-x-[-20%] bottom-0 h-full" />
+      </div>
+      <div className="absolute left-1/2 top-24 -z-10 h-80 w-[44rem] max-w-full -translate-x-1/2 rounded-full bg-accent/[0.10] blur-[120px]" aria-hidden="true" />
       <Container>
-        <div className="rounded-3xl border border-border-strong bg-bg-card p-8 md:p-16 relative overflow-hidden">
-          <div className="absolute -top-32 -right-32 h-72 w-72 rounded-full bg-accent/[0.08] blur-[100px]" aria-hidden="true" />
+        <div className="rounded-3xl border border-border-strong bg-white/[0.035] backdrop-blur-xl p-8 md:p-16 relative overflow-hidden shadow-[0_40px_120px_-40px_rgba(60,207,176,0.35)]">
+          <div className="absolute -top-32 -right-32 h-72 w-72 rounded-full bg-accent/[0.14] blur-[100px]" aria-hidden="true" />
 
           <div className="grid md:grid-cols-[1.4fr_0.6fr] gap-10 items-start">
             <div>
@@ -78,21 +86,11 @@ export function YProc() {
             <div>
               <Reveal delay={0.14}>
                 <h3 className="text-xs uppercase tracking-[0.2em] text-fg-subtle mb-4">How it works</h3>
-                <div className="space-y-4">
-                  {yproc.howItWorks.map((step, index) => (
-                    <div key={step.step} className="flex gap-4">
-                      <span className="font-display text-accent text-lg w-6 shrink-0">{index + 1}</span>
-                      <div>
-                        <p className="text-fg font-medium">{step.step}</p>
-                        <p className="text-sm text-fg-subtle leading-relaxed mt-0.5">{step.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <LayerStack layers={yproc.howItWorks.map((st) => ({ title: st.step, description: st.description }))} />
               </Reveal>
 
               <Reveal delay={0.26}>
-                <h3 className="text-xs uppercase tracking-[0.2em] text-fg-subtle mt-8 mb-3">Current status</h3>
+                <h3 className="text-xs uppercase tracking-[0.2em] text-fg-subtle mt-10 mb-3">Current status</h3>
                 <p className="text-fg-muted leading-relaxed text-[15px]">{yproc.currentStatusDetail}</p>
               </Reveal>
             </div>

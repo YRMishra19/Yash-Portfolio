@@ -5,7 +5,7 @@ import { ProjectModal } from "../components/ProjectModal";
 import { Reveal } from "../components/Reveal";
 import { SectionHeading } from "../components/SectionHeading";
 import { projects, type Project } from "../data/projects";
-import { TiltCard } from "../components/TiltCard";
+import { Depth3D } from "../components/Depth3D";
 
 const statusStyles: Record<Project["status"], string> = {
   Live: "text-accent border-accent/40",
@@ -29,11 +29,10 @@ export function Projects() {
         <div className="mt-16 grid gap-8 md:gap-10">
           {projects.map((project, index) => (
             <Reveal key={project.id} delay={index * 0.05}>
-              <TiltCard className="rounded-3xl">
               <article className="group rounded-3xl border border-border bg-bg-card overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-[0_20px_60px_-30px_rgba(18,102,90,0.35)]">
                 <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr]">
                   <div className={index % 2 === 1 ? "min-w-0 lg:order-2" : "min-w-0"}>
-                    <ProjectVisual project={project} />
+                    <ProjectVisual project={project} flip={index % 2 === 1} />
                   </div>
 
                   <div className="min-w-0 p-7 md:p-10 flex flex-col">
@@ -94,7 +93,6 @@ export function Projects() {
                   </div>
                 </div>
               </article>
-              </TiltCard>
             </Reveal>
           ))}
         </div>
@@ -107,9 +105,10 @@ export function Projects() {
 
 /** Screenshot framed like an app window, or - for internal work with no public
  *  screenshot - a pipeline diagram of how the system is put together. */
-function ProjectVisual({ project }: { project: Project }) {
+function ProjectVisual({ project, flip }: { project: Project; flip: boolean }) {
   return (
-    <div className="h-full bg-bg p-4 md:p-6 lg:p-8 flex items-center">
+    <div className="h-full bg-[radial-gradient(ellipse_at_50%_40%,var(--color-bg-elevated)_0%,var(--color-bg)_70%)] p-4 md:p-6 lg:p-8 flex items-center">
+      <Depth3D chips={project.metrics} flip={flip}>
       <div className="w-full rounded-xl border border-border-strong bg-bg-elevated overflow-hidden shadow-[0_12px_40px_-20px_rgba(32,28,22,0.35)]">
         <div className="flex items-center gap-1.5 border-b border-border px-3.5 py-2.5" aria-hidden="true">
           <span className="h-2.5 w-2.5 rounded-full bg-fg-subtle/40" />
@@ -177,6 +176,7 @@ function ProjectVisual({ project }: { project: Project }) {
           </div>
         )}
       </div>
+      </Depth3D>
     </div>
   );
 }
