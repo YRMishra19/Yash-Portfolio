@@ -85,21 +85,23 @@ export function Contact() {
             </Reveal>
 
             <Reveal delay={0.12}>
+              <div className="mt-8 flex justify-center md:max-w-sm">
               <a
                 href={`mailto:${profile.email}`}
-                className="mt-8 inline-flex items-center gap-2.5 text-fg transition-colors hover:text-accent"
+                className="inline-flex items-center gap-2.5 text-fg transition-colors hover:text-accent"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border-strong bg-white/[0.04]">
                   <Mail className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span className="text-sm font-medium md:text-base">{profile.email}</span>
               </a>
+              </div>
             </Reveal>
 
             <Reveal delay={0.18}>
-              <div className="mt-8">
+              <div className="mt-8 text-center md:max-w-sm">
                 <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-fg-muted">Find me elsewhere</p>
-                <SocialIcons links={socialLinks} className="flex flex-wrap items-center gap-3" />
+                <SocialIcons links={socialLinks} className="flex flex-wrap items-center justify-center gap-3" />
               </div>
             </Reveal>
 
