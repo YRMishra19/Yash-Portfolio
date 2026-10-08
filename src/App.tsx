@@ -1,3 +1,4 @@
+import { AmbientField } from "./components/AmbientField";
 import { CursorGlow } from "./components/CursorGlow";
 import { CustomCursor } from "./components/CustomCursor";
 import { EmailRail } from "./components/EmailRail";
@@ -21,13 +22,14 @@ import { YProc } from "./sections/YProc";
 function App() {
   return (
     <>
+      <AmbientField />
       <ScrollProgress />
       <CursorGlow />
       <CustomCursor />
       <Nav />
       <SocialRail />
       <EmailRail />
-      <main id="main-content">
+      <main id="main-content" className="relative z-[1]">
         <Hero />
         <SkillsMarquee />
         <StoryIntro />

@@ -5,6 +5,7 @@ import { ProjectModal } from "../components/ProjectModal";
 import { Reveal } from "../components/Reveal";
 import { SectionHeading } from "../components/SectionHeading";
 import { projects, type Project } from "../data/projects";
+import { TiltCard } from "../components/TiltCard";
 
 const statusStyles: Record<Project["status"], string> = {
   Live: "text-accent border-accent/40",
@@ -28,6 +29,7 @@ export function Projects() {
         <div className="mt-16 grid gap-8 md:gap-10">
           {projects.map((project, index) => (
             <Reveal key={project.id} delay={index * 0.05}>
+              <TiltCard className="rounded-3xl">
               <article className="group rounded-3xl border border-border bg-bg-card overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-[0_20px_60px_-30px_rgba(18,102,90,0.35)]">
                 <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr]">
                   <div className={index % 2 === 1 ? "min-w-0 lg:order-2" : "min-w-0"}>
@@ -92,6 +94,7 @@ export function Projects() {
                   </div>
                 </div>
               </article>
+              </TiltCard>
             </Reveal>
           ))}
         </div>

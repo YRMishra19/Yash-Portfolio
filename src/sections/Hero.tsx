@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Play, Volume2 } from "lucide-react";
 import { profile } from "../data/profile";
@@ -6,6 +6,10 @@ import { socialLinks } from "../data/social";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { Button } from "../components/Button";
 import { Container } from "../components/Container";
+import { HeroLite } from "../components/HeroLite";
+import { useCan3D } from "../hooks/useCan3D";
+
+const HeroScene = lazy(() => import("../components/three/HeroScene"));
 
 const INTRO_VIDEO = "/media/yash-intro.mp4";
 const INTRO_POSTER = "/media/yash-intro-poster.webp";
@@ -33,6 +37,7 @@ const HERO_LINKS = ["LinkedIn", "GitHub", "YouTube", "Y-PROC"];
 
 export function Hero() {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const can3D = useCan3D();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const bufferRef = useRef<HTMLCanvasElement | null>(null);
@@ -234,8 +239,17 @@ export function Hero() {
             transition={{ duration: 0.9, delay: 0.2 }}
             className="relative order-first mx-auto w-full max-w-[420px] sm:max-w-[520px] lg:order-none lg:max-w-none"
           >
+            {can3D && (
+              <div aria-hidden="true" className="pointer-events-none absolute -inset-x-36 -inset-y-16 z-0 hidden lg:block">
+                <Suspense fallback={null}>
+                  <HeroScene />
+                </Suspense>
+              </div>
+            )}
+            {!prefersReducedMotion && <HeroLite className="absolute left-[3%] top-[30%] z-0 sm:left-[8%] lg:hidden" />}
+
             <div
-              className="relative mx-auto aspect-[960/1168] w-full max-w-[330px] select-none sm:max-w-[400px] lg:max-h-[min(78svh,620px)] lg:w-auto lg:max-w-full"
+              className="relative z-10 mx-auto aspect-[960/1168] w-full max-w-[330px] select-none sm:max-w-[400px] lg:max-h-[min(78svh,620px)] lg:w-auto lg:max-w-full"
               style={FADE_MASK}
             >
               <img

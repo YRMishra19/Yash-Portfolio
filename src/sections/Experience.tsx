@@ -3,6 +3,7 @@ import { Container } from "../components/Container";
 import { Reveal } from "../components/Reveal";
 import { SectionHeading } from "../components/SectionHeading";
 import { experience } from "../data/experience";
+import { TiltCard } from "../components/TiltCard";
 
 export function Experience() {
   return (
@@ -24,6 +25,7 @@ export function Experience() {
                   aria-hidden="true"
                 />
 
+                <TiltCard className="rounded-2xl" max={3}>
                 <div className="rounded-2xl border border-border bg-bg-card p-6 md:p-8 transition-colors hover:border-border-strong">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
                     <div className="min-w-0 flex-1">
@@ -114,6 +116,7 @@ export function Experience() {
                     </a>
                   )}
                 </div>
+                </TiltCard>
               </li>
             </Reveal>
           ))}
