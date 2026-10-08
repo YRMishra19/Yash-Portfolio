@@ -34,7 +34,6 @@ export function useWebGL(): WebGLInfo {
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const fine = window.matchMedia("(pointer: fine)");
     const narrow = window.matchMedia("(max-width: 767px)");
     const update = () => setInfo(read());
     reduce.addEventListener("change", update);
