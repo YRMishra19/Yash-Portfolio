@@ -75,33 +75,34 @@ export function Contact() {
               <TopicPicker options={REASONS} value={reason} onChange={setReason} />
             </Reveal>
 
+            <Reveal delay={0.12} className="hidden md:block">
+              <PortraitImage
+                src={profile.portraitContact}
+                alt={profile.name}
+                className="relative mt-8 aspect-[4/3] max-w-sm overflow-hidden rounded-2xl border border-border-strong bg-bg-elevated"
+                overlay={false}
+              />
+            </Reveal>
+
             <Reveal delay={0.12}>
               <a
                 href={`mailto:${profile.email}`}
-                className="mt-10 inline-flex items-center gap-2.5 text-fg transition-colors hover:text-accent"
+                className="mt-8 inline-flex items-center gap-2.5 text-fg transition-colors hover:text-accent"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border-strong bg-white/[0.04]">
                   <Mail className="h-4 w-4" aria-hidden="true" />
                 </span>
-                <span className="text-sm md:text-base">{profile.email}</span>
+                <span className="text-sm font-medium md:text-base">{profile.email}</span>
               </a>
             </Reveal>
 
             <Reveal delay={0.18}>
               <div className="mt-8">
-                <p className="mb-4 text-xs uppercase tracking-[0.2em] text-fg-subtle">Find me elsewhere</p>
+                <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-fg-muted">Find me elsewhere</p>
                 <SocialIcons links={socialLinks} className="flex flex-wrap items-center gap-3" />
               </div>
             </Reveal>
 
-            <Reveal delay={0.22} className="hidden md:block">
-              <PortraitImage
-                src={profile.portraitContact}
-                alt={profile.name}
-                className="relative mt-10 aspect-[4/3] max-w-sm overflow-hidden rounded-2xl border border-border-strong bg-bg-elevated"
-                overlay={false}
-              />
-            </Reveal>
           </div>
 
           <Reveal delay={0.1} className="order-1 md:order-2">

@@ -38,7 +38,7 @@ export function SocialIcons({
             className={
               variant === "bare"
                 ? "inline-flex items-center justify-center text-fg transition-colors hover:text-accent hover:-translate-y-0.5"
-                : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-fg-muted transition-colors hover:border-accent hover:text-accent"
+                : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-border-strong text-fg transition-colors hover:border-accent hover:text-accent"
             }
           >
             <Icon className={iconClassName} aria-hidden="true" />

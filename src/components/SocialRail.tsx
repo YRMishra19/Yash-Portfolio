@@ -11,7 +11,7 @@ export function SocialRail() {
       <SocialIcons
         links={socialLinks}
         className="flex flex-col items-center gap-5"
-        iconClassName="h-[18px] w-[18px]"
+        iconClassName="h-5 w-5"
         variant="bare"
       />
     </div>
